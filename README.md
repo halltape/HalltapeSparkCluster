@@ -15,4 +15,4 @@ docker-compose up -d
 
 Run your spark cluster here
 
-- [Spark Notebook]("build/workspace/spark.ipynb")
+- [Spark Notebook](build/workspace/spark.ipynb)
