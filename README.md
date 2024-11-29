@@ -9,15 +9,26 @@
 ## Spark Local
 Spark is running in local mode on your machine.
 
-Git clone this repo
+1. Git clone this repo
 ```bash
 git clone git@github.com:halltape/HalltapeSparkCluster.git
 ```
-Unzip dataset
+2. Unzip dataset
 ```bash
 cd HalltapeSparkCluster/build/workspace/data/ && unzip output.csv.zip output.csv
 ```
-Start Spark Session here
+
+3. Install pyspark and Jupyter Lab
+```bash
+pip install pyspark jupyterlab
+```
+
+4. Start Jupyter Lab
+```bash
+jupyterlab
+```
+
+5. Open build/workspace/spark.ipynb in Jupyter Lab
 - [Spark Notebook](build/workspace/spark.ipynb)
 
 
