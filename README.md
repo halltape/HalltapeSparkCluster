@@ -25,7 +25,7 @@ pip install pyspark jupyterlab
 
 4. Start Jupyter Lab
 ```bash
-jupyterlab
+jupyter lab
 ```
 
 5. Open build/workspace/spark.ipynb in Jupyter Lab
