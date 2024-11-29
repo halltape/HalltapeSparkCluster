@@ -32,7 +32,8 @@ pip install pyspark jupyterlab
 jupyter lab
 ```
 
-1. Open **spark.ipynb** in Jupyter Lab
+5. Open **spark.ipynb** in Jupyter Lab
+
 - [Spark Notebook](build/workspace/spark.ipynb)
 
 
