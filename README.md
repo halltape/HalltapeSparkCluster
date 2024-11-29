@@ -15,7 +15,7 @@ git clone git@github.com:halltape/HalltapeSparkCluster.git
 ```
 2. Unzip dataset
 ```bash
-cd HalltapeSparkCluster/build/workspace/data && unzip output.csv.zip output.csv
+cd HalltapeSparkCluster/build/workspace/data && unzip output.csv.zip output.csv && cd ..
 ```
 
 3. Install pyspark and Jupyter Lab
@@ -25,7 +25,7 @@ pip install pyspark jupyterlab
 
 4. Start Jupyter Lab
 ```bash
-cd .. && jupyter lab
+jupyter lab
 ```
 
 5. Open build/workspace/spark.ipynb in Jupyter Lab
