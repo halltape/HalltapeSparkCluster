@@ -13,9 +13,13 @@ Spark is running in local mode on your machine.
 ```bash
 git clone git@github.com:halltape/HalltapeSparkCluster.git
 ```
-2. Unzip dataset
+2. Download datasets
 ```bash
-cd HalltapeSparkCluster/build/workspace/data && unzip output.csv.zip output.csv && cd ..
+cd HalltapeSparkCluster/build/workspace/data && \
+curl -L -o customs_data.csv "https://huggingface.co/datasets/halltape/customs_data/resolve/main/customs_data.csv?download=true" && \
+curl -L -o output_data.csv "https://huggingface.co/datasets/halltape/output/resolve/main/output_data.csv?download=true" && \
+cd ..
+
 ```
 
 3. Install pyspark and Jupyter Lab
