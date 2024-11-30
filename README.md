@@ -20,8 +20,6 @@ mkdir -p data && \
 curl -L -o data/customs_data.csv "https://huggingface.co/datasets/halltape/customs_data/resolve/main/customs_data.csv?download=true" && \
 curl -L -o data/output_data.csv "https://huggingface.co/datasets/halltape/output/resolve/main/output_data.csv?download=true" && \
 cd ..
-
-
 ```
 
 3. Install pyspark and Jupyter Lab
