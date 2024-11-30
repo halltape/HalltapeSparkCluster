@@ -41,6 +41,21 @@ jupyter lab
 
 - [Spark Notebook](build/workspace/spark.ipynb)
 
+***
+❌ **If you encounter the following error when running PySpark:**
+```
+RuntimeError: Python in worker has different version 3.12 than that in driver 3.10, PySpark cannot run with different minor versions. Please check environment variables PYSPARK_PYTHON and PYSPARK_DRIVER_PYTHON are correctly set.
+```
+✅ **Solution**
+
+You can do this by adding the following code snippet at the beginning of your PySpark script or notebook:
+```python
+import os
+import sys
+
+os.environ['PYSPARK_PYTHON'] = sys.executable
+os.environ['PYSPARK_DRIVER_PYTHON'] = sys.executable
+```
 
 ***
 ## Spark Cluster
