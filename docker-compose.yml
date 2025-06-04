@@ -12,6 +12,7 @@ services:
       - 4040:4040
     volumes:
       - ./build/workspace:/opt/workspace
+    command: jupyter lab --ip='*' --allow-root --no-browser --ServerApp.token='' --ServerApp.password=''
   spark-master:
     image: andreper/spark-master:3.0.0
     container_name: spark-master
