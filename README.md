@@ -15,15 +15,34 @@ I took the code from the [Apache Spark Standalone Cluster on Docker](https://git
 ## Spark Local
 Spark is running in local mode on your machine.
 
+**Prerequisites:**
+- Java must be installed (different versions may work, Java **17** is confirmed to work).
+- You can download OpenJDK 17 from [Eclipse Adoptium](https://adoptium.net/temurin/releases/?version=17).
+- The `JAVA_HOME` environment variable must be set and point to the Java installation directory.
+
 1. Git clone this repo
 ```bash
 git clone git@github.com:halltape/HalltapeSparkCluster.git
 ```
 2. Download datasets
+
+The dataset can be downloaded using `curl`. (**~2 GB**).
+
+**POSIX shells (Linux / macOS / WSL / Git Bash):**
+
 ```bash
 cd HalltapeSparkCluster/build/workspace && \
 mkdir -p data && \
-curl -L -o data/customs_data.csv "https://huggingface.co/datasets/halltape/customs_data/resolve/main/customs_data.csv?download=true"
+curl -L -o data/customs_data.csv \
+  "https://huggingface.co/datasets/halltape/customs_data/resolve/main/customs_data.csv?download=true"
+```
+
+**Windows (PowerShell):**
+
+```powershell
+cd HalltapeSparkCluster\build\workspace
+mkdir data -Force
+curl.exe -L "https://huggingface.co/datasets/halltape/customs_data/resolve/main/customs_data.csv?download=true" -o data\customs_data.csv
 ```
 
 3. Install pyspark and Jupyter Lab
