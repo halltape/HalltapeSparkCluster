@@ -5,7 +5,7 @@
 version: "3.6"
 services:
   jupyterlab:
-    image: andreper/jupyterlab:3.0.0-spark-3.0.0
+    image: andreper/jupyterlab:4.4.10-spark-3.5.7
     container_name: jupyterlab
     ports:
       - 8888:8888
@@ -14,7 +14,7 @@ services:
       - ./build/workspace:/opt/workspace
     command: jupyter lab --ip='*' --allow-root --no-browser --ServerApp.token='' --ServerApp.password=''
   spark-master:
-    image: andreper/spark-master:3.0.0
+    image: andreper/spark-master:latest
     container_name: spark-master
     ports:
       - 8080:8080
@@ -22,7 +22,7 @@ services:
     volumes:
       - ./build/workspace:/opt/workspace
   spark-worker-1:
-    image: andreper/spark-worker:3.0.0
+    image: andreper/spark-worker:latest
     container_name: spark-worker-1
     environment:
       - SPARK_WORKER_CORES=2
@@ -34,7 +34,7 @@ services:
     depends_on:
       - spark-master
   spark-worker-2:
-    image: andreper/spark-worker:3.0.0
+    image: andreper/spark-worker:latest
     container_name: spark-worker-2
     environment:
       - SPARK_WORKER_CORES=2
@@ -46,7 +46,7 @@ services:
     depends_on:
       - spark-master
   spark-worker-3:
-    image: andreper/spark-worker:3.0.0
+    image: andreper/spark-worker:latest
     container_name: spark-worker-3
     environment:
       - SPARK_WORKER_CORES=2
@@ -58,7 +58,7 @@ services:
     depends_on:
       - spark-master
   spark-worker-4:
-    image: andreper/spark-worker:3.0.0
+    image: andreper/spark-worker:latest
     container_name: spark-worker-4
     environment:
       - SPARK_WORKER_CORES=2
