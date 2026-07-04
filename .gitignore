@@ -2,3 +2,4 @@ build/workspace/.ipynb_checkpoints
 build/workspace/data
 .idea/
 **/.DS_Store
+**/__pycache__/

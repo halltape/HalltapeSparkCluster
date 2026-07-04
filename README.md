@@ -10,6 +10,7 @@ I took the code from the [Apache Spark Standalone Cluster on Docker](https://git
 - [HalltapeSparkCluster](#halltapesparkcluster)
   - [Spark Local](#spark-local)
   - [Spark Cluster](#spark-cluster)
+  - [Spark Resource Lab](#spark-resource-lab)
 
 ***
 ## Spark Local
@@ -77,16 +78,55 @@ os.environ['PYSPARK_DRIVER_PYTHON'] = sys.executable
 
 ***
 ## Spark Cluster
-**Spark Cluster with 4 executors**
+Standalone Spark cluster with configurable worker count.
 
 Run docker-compose
-```Dockerfile
-docker-compose up -d
+```bash
+docker compose --env-file profiles/spark-medium.env up -d --scale spark-worker=2
 ```
 
 Run your spark cluster here
 
 - [Spark Notebook](build/workspace/spark.ipynb)
 
-Review the out-of-memory and spill cases in Spark
-- [Spark Notebook 2](build/workspace/spark_oof_spill.ipynb)
+Review resource allocation, partition pruning, broadcast join, skew, and spill-related behavior in Spark UI:
+
+- [Spark Resource Lab](build/workspace/02_resource_allocation_lab.ipynb)
+
+***
+## Spark Resource Lab
+This repo can be used as a small commercial-like Spark lab: change cluster resources, change SparkSession executor settings, and compare the same workload in Spark UI.
+
+Start one of the cluster profiles:
+
+```bash
+docker compose --env-file profiles/spark-small.env up -d --scale spark-worker=1
+docker compose --env-file profiles/spark-medium.env up -d --scale spark-worker=2
+docker compose --env-file profiles/spark-large.env up -d --scale spark-worker=4
+```
+
+Open:
+
+- JupyterLab: http://localhost:8888
+- Spark Master UI: http://localhost:8080
+- Spark driver UI: http://localhost:4040
+
+Recommended demo order:
+
+1. Generate synthetic data in [01_generate_spark_datasets.ipynb](build/workspace/01_generate_spark_datasets.ipynb).
+2. Compare resource profiles in [02_resource_allocation_lab.ipynb](build/workspace/02_resource_allocation_lab.ipynb).
+3. In the notebook, change `PROFILE` between `tiny`, `normal`, and `wide`.
+4. Restart the Docker cluster with `spark-small`, `spark-medium`, and `spark-large` profiles and compare Spark UI metrics.
+
+The generated datasets cover common Spark cases:
+
+- fact table + small dimension for join and broadcast join;
+- partitioned parquet for partition pruning;
+- skewed keys for long tasks and uneven shuffle;
+- configurable row count through `SCALE`.
+
+Stop the lab:
+
+```bash
+docker compose down
+```
