@@ -13,7 +13,13 @@ x-spark-worker-env: &spark-worker-env
 
 services:
   jupyterlab:
-    image: ${JUPYTERLAB_IMAGE:-andreper/jupyterlab:4.4.10-spark-3.5.7}
+    build:
+      context: .
+      dockerfile: build/docker/jupyterlab-local/Dockerfile
+      args:
+        SPARK_VERSION: ${SPARK_VERSION:-3.5.7}
+        JUPYTERLAB_VERSION: ${JUPYTERLAB_VERSION:-4.4.10}
+    image: ${JUPYTERLAB_IMAGE:-halltape/jupyterlab-spark:3.5.7}
     container_name: jupyterlab
     ports:
       - "${JUPYTERLAB_PORT:-8888}:8888"
@@ -23,7 +29,16 @@ services:
       SPARK_MASTER_URL: spark://spark-master:7077
       PYSPARK_PYTHON: python3
       PYSPARK_DRIVER_PYTHON: python3
-    command: jupyter lab --ip='*' --allow-root --no-browser --ServerApp.token='' --ServerApp.password=''
+    command: >
+      jupyter lab
+      --ip='*'
+      --allow-root
+      --no-browser
+      --ServerApp.token=''
+      --ServerApp.password=''
+      --MappingKernelManager.kernel_info_timeout=180
+      --ServerApp.websocket_ping_interval=180
+      --ServerApp.websocket_ping_timeout=180
     depends_on:
       - spark-master
 

@@ -2,11 +2,20 @@ import os
 import time
 from contextlib import contextmanager
 
-from pyspark.sql import SparkSession
-from pyspark.sql import functions as F
-
 
 SPARK_MASTER_URL = os.environ.get("SPARK_MASTER_URL", "spark://spark-master:7077")
+
+
+def _spark_session():
+    from pyspark.sql import SparkSession
+
+    return SparkSession
+
+
+def _functions():
+    from pyspark.sql import functions as F
+
+    return F
 
 
 def make_spark(
@@ -17,6 +26,8 @@ def make_spark(
     shuffle_partitions=16,
     broadcast_threshold="10m",
 ):
+    SparkSession = _spark_session()
+
     return (
         SparkSession.builder
         .appName(app_name)
@@ -40,6 +51,7 @@ def timed(label):
 
 
 def generate_datasets(spark, base_path="data/lab", scale=1):
+    F = _functions()
     os.makedirs(base_path, exist_ok=True)
 
     rows = 1_000_000 * scale
@@ -82,6 +94,7 @@ def generate_datasets(spark, base_path="data/lab", scale=1):
 
 
 def benchmark_groupby(spark, path):
+    F = _functions()
     df = spark.read.parquet(path)
     with timed("group by country/date"):
         result = (
@@ -93,6 +106,7 @@ def benchmark_groupby(spark, path):
 
 
 def benchmark_join(spark, events_path, users_path, broadcast=False):
+    F = _functions()
     events = spark.read.parquet(events_path)
     users = spark.read.parquet(users_path)
     if broadcast:
@@ -104,6 +118,7 @@ def benchmark_join(spark, events_path, users_path, broadcast=False):
 
 
 def benchmark_skew(spark, path):
+    F = _functions()
     df = spark.read.parquet(path)
     with timed("skewed group by"):
         df.groupBy("key").agg(F.count("*").alias("rows"), F.sum("amount").alias("amount")).count()
