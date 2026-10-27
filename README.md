@@ -22,7 +22,7 @@ Spark is running in local mode on your machine.
 
 1. Git clone this repo
 ```bash
-git clone git@github.com:halltape/HalltapeSparkCluster.git
+git clone https://github.com/halltape/HalltapeSparkCluster.git
 ```
 2. Download datasets
 
